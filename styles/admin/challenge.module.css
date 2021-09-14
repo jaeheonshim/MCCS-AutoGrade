@@ -1,0 +1,35 @@
+.label {
+    font-size: 1.8em;
+    display: block;
+}
+
+.input {
+    font-size: 1.5em;
+}
+
+.nameinput {
+    font-size: 1.5em;
+    width: 20em;
+    margin-bottom: 1em;
+}
+
+.container {
+    display: flex;
+}
+
+.container > div {
+    margin: 2em;
+}
+
+.preview {
+    flex-grow: 1;
+    color: black;
+    background-color: white;
+    padding-left: 1em;
+    font-size: 1.2em;
+}
+
+.save {
+    display: block;
+    margin-top: 1em;
+}
