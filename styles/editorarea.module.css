@@ -1,0 +1,17 @@
+#code {
+    display: flex;
+    flex-direction: column;
+}
+
+#editor {
+    flex-grow: 1;
+}
+
+#console {
+    background-color: black;
+    border: white 2px solid;
+    padding: 1em;
+    margin-top: 0.5em;
+    height: 20vh;
+    overflow: scroll;
+}

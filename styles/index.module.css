@@ -1,0 +1,23 @@
+.container {
+  padding: 0 3em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.h1 {
+  font-size: 5em;
+  margin-bottom: 0;
+  line-height: 0.6em;
+}
+
+.p {
+  font-size: 1.3em;
+}
+
+.options {
+  margin-top: 3em;
+}
+
+.leaderboard {
+  margin: 3em;
+}
