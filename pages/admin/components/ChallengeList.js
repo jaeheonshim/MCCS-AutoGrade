@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link"
 
+import styles from "../../../styles/admin/index.module.css"
+
 export default function ChallengeList() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [challenges, setChallenges] = useState([]);
@@ -22,7 +24,7 @@ export default function ChallengeList() {
         return <div>
             {
                 challenges.map(item => (
-                    <div><Link href={`/admin/challenges/${item._id}`}>{item.name}</Link></div>
+                    <div className={styles.challenge}><Link href={`/admin/challenges/${item._id}`}>{item.name}</Link></div>
                 ))
             }
         </div>

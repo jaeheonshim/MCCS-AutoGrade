@@ -5,10 +5,21 @@ import ReactMarkdown from "react-markdown";
 export default function Challenge(props) {
     const [description, setDescription] = useState(props.description || "");
     const [name, setName] = useState(props.name || "");
+    
+    const [saveEnabled, setSaveEnabled] = useState(true);
+    const [errorText, setErrorText] = useState("");
+    
+    useEffect(() => {
+        if(!props.name) {
+            setSaveEnabled(false);
+            setErrorText("Error: Not Found");
+        }
+    }, []);    
 
     return (
         <div className={styles.container}>
             <div>
+                <div class="error">{errorText}</div>
                 <label className={styles.label} htmlFor="name">
                     Challenge Name
                 </label>
@@ -17,13 +28,33 @@ export default function Challenge(props) {
                     Challenge Description
                 </label>
                 <textarea cols="70" rows="30" className={[styles.textarea, styles.input].join(" ")} value={description} onChange={(event) => setDescription(event.target.value)}></textarea>
-                <button className={styles.save}>Save</button>
+                <button className={styles.save} onClick={save} disabled={!saveEnabled}>Save</button>
             </div>
             <div className={styles.preview}>
                 <ReactMarkdown>{description}</ReactMarkdown>
             </div>
         </div>
     );
+
+    async function save() {
+        setSaveEnabled(false);
+        const res = await fetch(`/api/challenges/${props._id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                name: name,
+                description: description
+            })
+        });
+        setSaveEnabled(true);
+        const data = await res.text();
+
+        if(res.status != 200) {
+            setErrorText(data);
+        }
+    }
 }
 
 export async function getServerSideProps(context) {

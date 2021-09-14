@@ -31,3 +31,18 @@ button:hover {
   color: black;
   background-color: white;
 }
+
+button:disabled {
+  background-color: darkgray;
+}
+
+button:disabled:hover {
+  cursor: default;
+  color: white;
+  background-color: darkgray;
+}
+
+.error {
+  color: red;
+  font-size: 1.2em;
+}
