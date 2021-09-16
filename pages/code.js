@@ -4,6 +4,8 @@ import editorcss from "../styles/editorarea.module.css"
 import Editor, { useMonaco } from "@monaco-editor/react";
 import { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import ChallengeDescription from "./components/ChallengeDescription";
+import CodeRunner from "./components/CodeRunner";
 
 export default function Code() {
     const [showDescription, setShowDescription] = useState(true);
@@ -27,11 +29,7 @@ export default function Code() {
             </div>
             <div className={styles.workspace}>
                 <div id={styles.expand} className={styles.div} style={{ visibility: showDescription ? "collapse" : "initial" }} onClick={() => changeShowDescription(true)} title="Expand Instructions"><p><span>»&nbsp;</span>Expand Instructions</p></div>
-                <div style={{ visibility: showDescription ? "initial" : "collapse" }}>
-                    <div id={styles.collapse} onClick={() => changeShowDescription(false)} title="Collapse Instructions">«</div>
-                    <h1>Test</h1>
-                    <ReactMarkdown className={styles.p}>hello</ReactMarkdown>
-                </div>
+                <ChallengeDescription title={"Test"} text={"Text"} show={showDescription} onCollapse={() => changeShowDescription(false)} />
                 <div id={editorcss.code} className={styles.div}>
                     <div id={editorcss.editor}>
                         <Editor
@@ -40,15 +38,7 @@ export default function Code() {
                             onMount={handleEditorDidMount}
                         />
                     </div>
-                    <div>
-                        <button>Run Tests</button>
-                        <button>Submit</button>
-                        <div id={editorcss.console}>
-                            Running tests...
-
-                            Line<br />
-                        </div>
-                    </div>
+                    <CodeRunner />
                 </div>
             </div>
         </div>
