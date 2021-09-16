@@ -19,7 +19,7 @@ export default function Challenge(props) {
     return (
         <div className={styles.container}>
             <div>
-                <div class="error">{errorText}</div>
+                <div className="error">{errorText}</div>
                 <label className={styles.label} htmlFor="name">
                     Challenge Name
                 </label>

@@ -22,7 +22,9 @@
     display: flex;
 }
 
-.workspace > .div {
+.workspace > div {
+    display: block;
+    visibility: visible;
     flex: 1;
     background-color: #181818;
     padding: 1em;
@@ -45,25 +47,24 @@
 #expand {
     cursor: pointer;
 
-    display: none;
     color: black;
     background-color: white;
     font-size: 1.5em;
     font-weight: bold;
 
     position: relative;
+    flex: 0 0;
 
     padding: 0.1em 0.4em;
-    flex: 0 0;
 }
 
-#expand > .p {
+#expand > p {
     writing-mode: vertical-rl;
     text-orientation: mixed;
     line-height: 0;
 }
 
-#expand > .p > .span {
+#expand > p > span {
     text-orientation: upright;
     font-size: 1.7em;
 }
