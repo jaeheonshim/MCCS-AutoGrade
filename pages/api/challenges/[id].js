@@ -16,7 +16,14 @@ export default async function handler(req, res) {
             return;
         }
 
-        const challenge = await CodeChallenge.find({_id: req.query.id});
+        let challenge;
+        
+        if(req.query.id === "new") {
+            challenge = [new CodeChallenge()];
+        } else {
+            challenge = await CodeChallenge.find({_id: req.query.id});
+        }
+
         if(challenge.length > 0) {
             challenge[0].name = body.name;
             challenge[0].description = body.description;

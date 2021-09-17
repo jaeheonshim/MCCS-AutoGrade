@@ -1,6 +1,7 @@
 import styles from "../../../styles/admin/challenge.module.css"
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { useRouter } from "next/dist/client/router";
 
 export default function Challenge(props) {
     const [description, setDescription] = useState(props.description || "");
@@ -8,9 +9,11 @@ export default function Challenge(props) {
     
     const [saveEnabled, setSaveEnabled] = useState(true);
     const [errorText, setErrorText] = useState("");
+
+    const router = useRouter();
     
     useEffect(() => {
-        if(!props.name) {
+        if(!props.name && props._id !== "new") {
             setSaveEnabled(false);
             setErrorText("Error: Not Found");
         }
@@ -53,6 +56,8 @@ export default function Challenge(props) {
 
         if(res.status != 200) {
             setErrorText(data);
+        } else {
+            router.push("/admin")
         }
     }
 }
@@ -63,7 +68,7 @@ export async function getServerSideProps(context) {
     if(res.status != 200) {
         return {
             props: {
-                id: id
+                _id: id
             }
         }
     }
