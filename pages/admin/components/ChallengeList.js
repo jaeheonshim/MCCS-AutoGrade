@@ -24,7 +24,7 @@ export default function ChallengeList() {
         return <div>
             {
                 challenges.map(item => (
-                    <div className={styles.challenge}><Link href={`/admin/challenges/${item._id}`}>{item.name}</Link></div>
+                    <div className={styles.challenge} key={item._id}><Link href={`/admin/challenges/${item._id}`}>{item.name}</Link></div>
                 ))
             }
         </div>

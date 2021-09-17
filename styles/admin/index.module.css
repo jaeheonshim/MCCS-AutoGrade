@@ -5,3 +5,19 @@
 .challenge a {
     color: white;
 }
+
+.newChallenge {
+    display: inline-block;
+
+    font-size: 1.3em;
+    border: 2px white solid;
+    padding: 0.5em 1em;
+    margin-top: 2em;
+
+    background-color: black;
+    color: white;
+}
+
+.newChallenge a:visited {
+    color: white;
+}

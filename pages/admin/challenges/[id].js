@@ -64,6 +64,12 @@ export default function Challenge(props) {
 
 export async function getServerSideProps(context) {
     const id = context.params.id;
+    if(id === "new") return {
+        props: {
+            _id: id
+        }
+    };
+
     const res = await fetch(`http://localhost:3000/api/challenges/${id}`);
     if(res.status != 200) {
         return {
