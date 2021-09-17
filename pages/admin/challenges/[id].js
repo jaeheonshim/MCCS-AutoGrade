@@ -36,13 +36,31 @@ export default function Challenge(props) {
                     Challenge Description
                 </label>
                 <textarea cols="70" rows="30" className={[styles.textarea, styles.input].join(" ")} value={description} onChange={(event) => setDescription(event.target.value)}></textarea>
+                <br />
                 <button className={styles.save} onClick={save} disabled={!saveEnabled}>Save</button>
+                <button className={styles.delete} onClick={deleteChallenge} disabled={!saveEnabled}>Delete</button>
             </div>
             <div className={styles.preview}>
                 <ReactMarkdown>{description}</ReactMarkdown>
             </div>
         </div>
     );
+
+    async function deleteChallenge() {
+        setSaveEnabled(false);
+        const res = await fetch(`/api/challenges/${props._id}`, {
+            method: "DELETE"
+        });
+        setSaveEnabled(true);
+
+        const data = await res.text();
+        
+        if (res.status != 200) {
+            setErrorText(data);
+        } else {
+            router.push("/admin")
+        }
+    }
 
     async function save() {
         setSaveEnabled(false);

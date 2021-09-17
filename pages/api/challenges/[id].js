@@ -1,5 +1,6 @@
 import connectDB from "../../../src/mongodb";
 import CodeChallenge from "../../../src/schemas/CodeChallenge";
+import Code from "../../code/[id]";
 
 export default async function handler(req, res) {
     connectDB();
@@ -33,6 +34,11 @@ export default async function handler(req, res) {
         } else {
             res.status(404).end();
         }
+    } else if(req.method == "DELETE") {
+        CodeChallenge.deleteOne({_id: req.query.id}, function(err) {
+            if(!err) res.status(200).end();
+            else res.status(500).end();
+        });
     } else {
         const id = req.query.id;
         const challenge = await CodeChallenge.find({_id: id});

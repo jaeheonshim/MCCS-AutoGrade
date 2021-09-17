@@ -30,6 +30,11 @@
 }
 
 .save {
-    display: block;
     margin-top: 1em;
+}
+
+.delete {
+    margin-left: 8px;
+    color: red;
+    border-color: red;
 }
