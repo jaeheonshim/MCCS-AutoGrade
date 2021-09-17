@@ -41,7 +41,7 @@ export default function Challenge(props) {
                 <button className={styles.delete} onClick={deleteChallenge} disabled={!saveEnabled}>Delete</button>
             </div>
             <div className={styles.preview}>
-                <ReactMarkdown>{description}</ReactMarkdown>
+                <ReactMarkdown linkTarget="_blank">{description}</ReactMarkdown>
             </div>
         </div>
     );

@@ -12,6 +12,8 @@ export default function Code(props) {
     const [showDescription, setShowDescription] = useState(true);
     const editorRef = useRef(null);
 
+    const [language, setLanguage] = useState("java");
+
     function handleEditorDidMount(editor, monaco) {
         console.log("Editor did mount");
         window.editor = editor;
@@ -32,11 +34,11 @@ export default function Code(props) {
                 <div id={styles.expand} className={styles.div} style={{ visibility: showDescription ? "collapse" : "initial" }} onClick={() => changeShowDescription(true)} title="Expand Instructions"><p><span>»&nbsp;</span>Expand Instructions</p></div>
                 <ChallengeDescription title={props.name} text={props.description} show={showDescription} onCollapse={() => changeShowDescription(false)} />
                 <div id={editorcss.code} className={styles.div}>
-                    <EditorToolbar />
+                    <EditorToolbar onLangChange={setLanguage} />
                     <div id={editorcss.editor}>
                         <Editor
                             theme="vs-dark"
-                            defaultLanguage="javascript"
+                            language={language}
                             onMount={handleEditorDidMount}
                         />
                     </div>
