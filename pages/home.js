@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/home.module.css"
-import ChallengeItem from "./components/challengeitem";
+import ChallengeItem from "./components/ChallengeItem";
 
 export default function Home() {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -12,7 +12,7 @@ export default function Home() {
             .then(
                 (result) => {
                     setIsLoaded(true);  
-                    setChallengeList(result.map((e) => <ChallengeItem name={e.name} />)); 
+                    setChallengeList(result.map((e) => <ChallengeItem name={e.name} shortDescription={e.shortDescription} />)); 
                 }
             );
     }, []);

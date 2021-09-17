@@ -5,7 +5,7 @@ export default function ChallengeItem(props) {
         <div className={styles.challenge}>
             <div className={styles["challenge-details"]}>
                 <h3>{props.name}</h3>
-                <p>{props.shortdesc}</p>
+                <p>{props.shortDescription}</p>
             </div>
             <div>
                 <button>Solve!</button>

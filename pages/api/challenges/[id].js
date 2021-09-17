@@ -27,6 +27,7 @@ export default async function handler(req, res) {
         if(challenge.length > 0) {
             challenge[0].name = body.name;
             challenge[0].description = body.description;
+            challenge[0].shortDescription = body.shortDescription;
             challenge[0].save();
             res.status(200).end();
         } else {
