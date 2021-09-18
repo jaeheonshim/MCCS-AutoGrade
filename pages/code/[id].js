@@ -13,6 +13,7 @@ export default function Code(props) {
     const editorRef = useRef(null);
 
     const [language, setLanguage] = useState("java");
+    const [codeValue, setCodeValue] = useState("");
 
     function handleEditorDidMount(editor, monaco) {
         console.log("Editor did mount");
@@ -39,10 +40,11 @@ export default function Code(props) {
                         <Editor
                             theme="vs-dark"
                             language={language}
+                            value={codeValue}
                             onMount={handleEditorDidMount}
                         />
                     </div>
-                    <CodeRunner />
+                    <CodeRunner getCodeContent={() => editorRef.current.getValue()} />
                 </div>
             </div>
         </div>
