@@ -1,5 +1,5 @@
 .label {
-    font-size: 1.8em;
+    font-size: 1.2em;
     display: block;
 }
 
@@ -15,14 +15,18 @@
 
 .container {
     display: flex;
+    justify-content: space-around;
 }
 
-.container > div {
-    margin: 2em;
+.fields {
+    flex-grow: 1;
+    flex-basis: 50%;
+    margin: 1em;
 }
 
 .preview {
-    flex-grow: 1;
+    flex-basis: 50%;
+    flex-grow: 2;
     color: black;
     background-color: white;
     padding-left: 1em;
@@ -37,4 +41,8 @@
     margin-left: 8px;
     color: red;
     border-color: red;
+}
+
+.codeEditor {
+    height: 50em;
 }

@@ -29,6 +29,7 @@ export default async function handler(req, res) {
             challenge[0].name = body.name;
             challenge[0].description = body.description;
             challenge[0].shortDescription = body.shortDescription;
+            challenge[0].defaultCode = body.defaultCode;
             challenge[0].save();
             res.status(200).end();
         } else {

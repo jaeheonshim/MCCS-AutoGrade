@@ -1,12 +1,18 @@
 import styles from "../../../styles/admin/challenge.module.css"
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useRouter } from "next/dist/client/router";
+import EditorToolbar from "../../components/EditorToolbar";
+import Editor from "@monaco-editor/react";
 
 export default function Challenge(props) {
     const [shortDescription, setShortDescription] = useState(props.shortDescription || "");
     const [description, setDescription] = useState(props.description || "");
     const [name, setName] = useState(props.name || "");
+
+    const editor = useRef();
+    const defaultCode = useRef(props.defaultCode);
+    const [currentLanguage, setCurrentLanguage] = useState("java");
 
     const [saveEnabled, setSaveEnabled] = useState(true);
     const [errorText, setErrorText] = useState("");
@@ -20,9 +26,20 @@ export default function Challenge(props) {
         }
     }, []);
 
+    useEffect(() => {
+        if(editor.current) {
+            editor.current.setValue(defaultCode.current[currentLanguage] || "");
+        }
+    }, [currentLanguage]);
+
+    function onEditorMount(e) {
+        editor.current = e;
+        editor.current.setValue(defaultCode.current[currentLanguage] || "");
+    }
+
     return (
         <div className={styles.container}>
-            <div>
+            <div className={styles.fields}>
                 <div className="error">{errorText}</div>
                 <label className={styles.label} htmlFor="name">
                     Challenge Name
@@ -31,12 +48,22 @@ export default function Challenge(props) {
                 <label className={styles.label} htmlFor="shortdescription">
                     Challenge Short Description
                 </label>
-                <input type="text" size={70} id="shortdescription" value={shortDescription} onChange={(event) => setShortDescription(event.target.value)} className={styles.input}></input>
+                <input type="text" size={50} id="shortdescription" value={shortDescription} onChange={(event) => setShortDescription(event.target.value)} className={styles.input}></input>
                 <label className={styles.label} htmlFor="description">
                     Challenge Description
                 </label>
-                <textarea cols="70" rows="30" className={[styles.textarea, styles.input].join(" ")} value={description} onChange={(event) => setDescription(event.target.value)}></textarea>
+                <textarea cols="50" rows="30" className={[styles.textarea, styles.input].join(" ")} value={description} onChange={(event) => setDescription(event.target.value)}></textarea>
                 <br />
+                <EditorToolbar onLangChange={setCurrentLanguage} value={currentLanguage} />
+                <div className={styles.codeEditor}>
+                    <Editor
+                        theme="vs-dark"
+                        language={currentLanguage}
+                        value={defaultCode[currentLanguage]}
+                        onChange={onCodeEdit}
+                        onMount={onEditorMount}
+                    />
+                </div>
                 <button className={styles.save} onClick={save} disabled={!saveEnabled}>Save</button>
                 <button className={styles.delete} onClick={deleteChallenge} disabled={!saveEnabled}>Delete</button>
             </div>
@@ -46,6 +73,10 @@ export default function Challenge(props) {
         </div>
     );
 
+    function onCodeEdit(str) {
+        defaultCode.current[currentLanguage] = editor.current.getValue();
+    }
+
     async function deleteChallenge() {
         setSaveEnabled(false);
         const res = await fetch(`/api/challenges/${props._id}`, {
@@ -54,7 +85,7 @@ export default function Challenge(props) {
         setSaveEnabled(true);
 
         const data = await res.text();
-        
+
         if (res.status != 200) {
             setErrorText(data);
         } else {
@@ -64,6 +95,11 @@ export default function Challenge(props) {
 
     async function save() {
         setSaveEnabled(false);
+
+        for(let key in defaultCode.current) {
+            defaultCode.current[key] = Buffer.from(defaultCode.current[key]).toString("base64");
+        }
+
         const res = await fetch(`/api/challenges/${props._id}`, {
             method: "POST",
             headers: {
@@ -72,7 +108,8 @@ export default function Challenge(props) {
             body: JSON.stringify({
                 name: name,
                 description: description,
-                shortDescription: shortDescription
+                shortDescription: shortDescription,
+                defaultCode: defaultCode.current
             })
         });
         setSaveEnabled(true);
@@ -104,6 +141,10 @@ export async function getServerSideProps(context) {
     }
 
     const data = await res.json();
+
+    for(let key in data.defaultCode) {
+        data.defaultCode[key] = Buffer.from(data.defaultCode[key], "base64").toString("utf8");
+    }
 
     return {
         props: {

@@ -16,8 +16,6 @@ export default function Code(props) {
     const [codeValue, setCodeValue] = useState("");
 
     function handleEditorDidMount(editor, monaco) {
-        console.log("Editor did mount");
-        window.editor = editor;
         editorRef.current = editor;
     }
 
