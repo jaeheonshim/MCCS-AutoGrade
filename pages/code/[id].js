@@ -44,7 +44,7 @@ export default function Code(props) {
                             onMount={handleEditorDidMount}
                         />
                     </div>
-                    <CodeRunner getCodeContent={() => editorRef.current.getValue()} />
+                    <CodeRunner getCodeContent={() => editorRef.current.getValue()} getSelectedLanguage={() => language} />
                 </div>
             </div>
         </div>

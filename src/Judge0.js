@@ -1,7 +1,8 @@
-export async function submission(code) {
+export async function submission(code, languageId) {
     const body = {
         "source_code": code,
-        "language_id": 75
+        "redirect_stderr_to_stdout": true,
+        "language_id": languageId
     }
 
     const res = await fetch(`http://207.244.235.226:2358/submissions/?base64_encoded=true`, {
@@ -23,4 +24,11 @@ export async function status(token) {
 
 export const StatusDefinition = {
     good: [1, 2, 3]
+}
+
+export const Languages = {
+    "c": 50,
+    "java": 62,
+    "javascript": 63,
+    "python": 71
 }

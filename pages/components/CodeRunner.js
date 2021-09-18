@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import editorcss from "../../styles/editorarea.module.css"
 import ReactHtmlParser from "react-html-parser"
-import { StatusDefinition } from "../../src/Judge0";
+import { Languages, StatusDefinition } from "../../src/Judge0";
 
 export default function CodeRunner(props) {
     const consoleLines = useRef([]);
@@ -67,6 +67,7 @@ export default function CodeRunner(props) {
     }
 
     function processStatus(status) {
+        consoleLine(Buffer.from(status.stdout || "", "base64").toString("utf8"));
         if(StatusDefinition.good.includes(status.status.id)) {
             consoleMegaSuccess(status.status.description);
         } else {
@@ -93,7 +94,8 @@ export default function CodeRunner(props) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                code: code
+                code: code,
+                language: Languages[props.getSelectedLanguage()]
             })
         })).json();
 

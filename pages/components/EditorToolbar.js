@@ -3,10 +3,10 @@ export default function EditorToolbar(props) {
         <div>
             <label for="language">Language</label>
             <select id="language" onChange={(event) => props.onLangChange(event.target.value)}>
-                <option value="java">Java</option>
-                <option value="javascript">Javascript</option>
-                <option value="python">Python</option>
-                <option value="c">C</option>
+                <option value="c">C (GCC 9.2.0)</option>
+                <option value="java" defaultValue={true}>Java (OpenJDK 13.0.1)</option>
+                <option value="javascript">Javascript (Node.js 12.14.0)</option>
+                <option value="python">Python (3.8.1)</option>
             </select>
         </div>
     )
